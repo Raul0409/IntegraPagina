@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integradora</title>
+
+
+    <link rel="manifest" href="manifest.json">
+
+
+
+    <link rel="stylesheet" href="EstilosIndex.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Anton&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- TRANSICIÓN DE PANTALLA -->
+<div class="page-transition">
+    <div class="loading-text">LOADING...</div>
+</div>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="game-title">The Last Notes</h1>
+
+        <p class="game-desc">
+            Sobrevive a una entidad que te persigue.  
+            <br>Encuentra las notas o muere.
+        </p>
+
+        <div class="hero-menu">
+            <a href="equipo.html" class="btn primary">EQUIPO</a>
+            <a href="#" class="btn secondary">PRÓXIMAMENTE</a>
+        </div>
+    </div>
+</section>
+
+<script>
+    const links = document.querySelectorAll("a");
+
+    links.forEach(link => {
+        link.addEventListener("click", e => {
+            const href = link.getAttribute("href");
+
+            if (!href || href.startsWith("#")) return;
+
+            e.preventDefault();
+            document.body.classList.add("transition-active");
+
+            setTimeout(() => {
+                window.location.href = href;
+            }, 600);
+        });
+    });
+</script>
+<!-- SONIDOS ARCADE -->
+<audio id="sound-start" src="arcade-start.mp3"></audio>
+<audio id="sound-hover" src="arcade-hover.mp3"></audio>
+<audio id="sound-click" src="arcade-click.mp3"></audio>
+
+<script>
+    const startSound = document.getElementById("sound-start");
+    const hoverSound = document.getElementById("sound-hover");
+    const clickSound = document.getElementById("sound-click");
+
+    // Sonido al cargar la página
+    window.addEventListener("load", () => {
+        startSound.volume = 0.6;
+        startSound.play().catch(() => {});
+    });
+
+    // Hover en botones
+    document.querySelectorAll(".btn").forEach(btn => {
+        btn.addEventListener("mouseenter", () => {
+            hoverSound.currentTime = 0;
+            hoverSound.volume = 0.4;
+            hoverSound.play().catch(() => {});
+        });
+
+        btn.addEventListener("click", () => {
+            clickSound.currentTime = 0;
+            clickSound.volume = 0.6;
+            clickSound.play().catch(() => {});
+        });
+    });
+</script>
+    
+
+
+
+
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('Service Worker registrado', reg))
+            .catch(err => console.log('Fallo de registro:', err));
+    });
+}
+</script>
+
+<button id="installBtn" style="display:none;">Install App</button>
+
+</body>
+</html>
